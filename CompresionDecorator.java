@@ -1,37 +1,22 @@
-import java.util.zip.*;
-import java.io.*;
-
 public class CompresionDecorator extends CifradoDecorator {
 
     public CompresionDecorator(Archivo archivo) {
         super(archivo);
     }
 
-  
-    public void escribir(byte[] datos) {
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-             GZIPOutputStream gzip = new GZIPOutputStream(bos)) {
-            gzip.write(datos);
-            gzip.close();
-            super.escribir(bos.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public byte[] leer() {
+        System.out.println("🔹 Descomprimiendo archivo...");
+        byte[] datos = archivo.leer();
+        // Simulación: simplemente devuelve los mismos datos
+        return datos;
     }
 
-    public byte[] leer() {
-        try (ByteArrayInputStream bis = new ByteArrayInputStream(super.leer());
-             GZIPInputStream gzip = new GZIPInputStream(bis);
-             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = gzip.read(buffer)) > 0) {
-                bos.write(buffer, 0, len);
-            }
-            return bos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
-        }
+    @Override
+    public void escribir(byte[] datos) {
+        System.out.println("🔹 Comprimiendo archivo...");
+        // Simulación: podrías reducir artificialmente el tamaño o dejar igual
+        archivo.escribir(datos);
     }
 }
+
