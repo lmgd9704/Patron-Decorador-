@@ -4,7 +4,6 @@ public class CompresionDecorator extends CifradoDecorator {
         super(archivo);
     }
 
-    @Override
     public byte[] leer() {
         System.out.println("🔹 Descomprimiendo archivo...");
         byte[] datos = archivo.leer();
@@ -12,7 +11,6 @@ public class CompresionDecorator extends CifradoDecorator {
         return datos;
     }
 
-    @Override
     public void escribir(byte[] datos) {
         System.out.println("🔹 Comprimiendo archivo...");
         // Simulación: podrías reducir artificialmente el tamaño o dejar igual
